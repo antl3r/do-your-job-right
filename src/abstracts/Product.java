@@ -1,10 +1,28 @@
 package abstracts;
 
+import java.util.UUID;
+
 public abstract class Product extends Entity {
     protected int amount;
 
+    /**
+     * Constructs a Product with the specified amount and a random UUID.
+     * 
+     * @param amount The amount of the product.
+     */
     public Product(int amount) {
         super();
+        this.amount = amount;
+    }
+
+    /**
+     * Constructs a Product with the specified amount and a custom UUID.
+     * 
+     * @param amount The amount of the product.
+     * @param id     The custom UUID for the product.
+     */
+    public Product(int amount, UUID id) {
+        super(id);
         this.amount = amount;
     }
 
