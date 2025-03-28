@@ -5,15 +5,6 @@ import java.util.UUID;
 
 public class TransactionProduct extends Product {
     /**
-     * Constructs a TransactionProduct with the specified amount and a random UUID.
-     * 
-     * @param amount The amount of the product.
-     */
-    public TransactionProduct(int amount) {
-        super(amount);
-    }
-
-    /**
      * Constructs a TransactionProduct with the specified amount and a custom UUID.
      * 
      * @param amount The amount of the product.
