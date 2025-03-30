@@ -9,9 +9,11 @@ public class AdminMenu extends Menu {
 
     public AdminMenu(BurhanPedia burhanPedia) {
         super(
-            new RouterItem("Choice1", () -> {return false;}),
-            new RouterItem("Choice2", () -> {return false;}),
-            new RouterItem("Choice3", () -> {return false;})
+            new RouterItem("Generate Voucher", () -> {return false;}),
+            new RouterItem("Generate Promo", () -> {return false;}),
+            new RouterItem("Lihat Voucher", () -> {return false;}),
+            new RouterItem("Lihat Promo", () -> {return false;}),
+            new RouterItem("Kembali ke Menu Utama", () -> {return false;})
         );
         this.burhanPedia = burhanPedia;
     }

@@ -30,6 +30,10 @@ public class MainMenu extends Menu {
             new RouterItem("Hari Selanjutnya", () -> {
                 this.handleLogin();
                 return false;
+            }),
+            new RouterItem("Keluar", () -> {
+                System.out.println("Terima kasih telah menggunakan aplikasi ini!");
+                return false;
             })
         );
     }

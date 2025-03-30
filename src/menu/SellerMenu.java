@@ -9,9 +9,15 @@ public class SellerMenu extends Menu {
 
     public SellerMenu(BurhanPedia burhanPedia) {
         super(
-            new RouterItem("Choice1", () -> {return false;}),
-            new RouterItem("Choice2", () -> {return false;}),
-            new RouterItem("Choice3", () -> {return false;})
+            new RouterItem("Cek Produk", () -> {return false;}),
+            new RouterItem("Tambah Produk", () -> {return false;}),
+            new RouterItem("Tambah Stok", () -> {return false;}),
+            new RouterItem("Ubah Harga Barang", () -> {return false;}),
+            new RouterItem("Kirim Barang", () -> {return false;}),
+            new RouterItem("Lihat Laporan Pendapatan", () -> {return false;}),
+            new RouterItem("Cek Saldo", () -> {return false;}),
+            new RouterItem("Lihat Riwayat Transaksi", () -> {return false;}),
+            new RouterItem("Kembali ke Menu Utama", () -> {return false;})
         );
         this.burhanPedia = burhanPedia;
     }
