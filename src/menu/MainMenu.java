@@ -120,7 +120,7 @@ public class MainMenu extends Menu {
                 })
             );
 
-            roleMenu.printAndPrompt(burhanPedia.scanner);
+            roleMenu.printAndPrompt(SharedScanner.getInstance());
         } else {
             String password = promptPassword();
             Router roleMenu = new Router();
@@ -139,7 +139,7 @@ public class MainMenu extends Menu {
                 })
             );
 
-            roleMenu.printAndPrompt(burhanPedia.scanner);
+            roleMenu.printAndPrompt(SharedScanner.getInstance());
         }
     }
 }

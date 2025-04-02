@@ -12,6 +12,4 @@ public class BurhanPedia {
     public final SellerRepo sellerRepo = new SellerRepo();
     public final TransactionRepo transactionRepo = new TransactionRepo();
     public final VoucherRepo voucherRepo = new VoucherRepo();
-
-    public final Scanner scanner = new Scanner(System.in);
 }
