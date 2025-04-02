@@ -60,15 +60,61 @@ public class MainMenu extends Menu {
         String username = promptUsername();
         String password = promptPassword();
 
-        User user = burhanPedia.buyerRepo.findByUsername(username);
-        if (user == null) {
+        User buyer = burhanPedia.buyerRepo.findByUsername(username);
+        User seller = burhanPedia.sellerRepo.findByUsername(username);
+        User courier = burhanPedia.courierRepo.findByUsername(username);
+
+        if (buyer == null && seller == null && courier == null) {
             System.out.println("User tidak ditemukan.");
-        } else if (!user.getPassword().equals(password)) {
-            System.out.println("Password salah.");
-        } else {
-            loggedInUser = user;
-            System.out.println("Login berhasil. Selamat datang, " + loggedInUser.getUsername() + "!");
+            return;
         }
+
+        User validUser = null;
+        if (buyer != null && buyer.getPassword().equals(password)) validUser = buyer;
+        if (seller != null && seller.getPassword().equals(password)) validUser = seller;
+        if (courier != null && courier.getPassword().equals(password)) validUser = courier;
+
+        if (validUser == null) {
+            System.out.println("Password salah.");
+            return;
+        }
+
+        Router loginRouter = new Router();
+        if (seller != null) {
+            loginRouter.addRouterItem(new RouterItem("Penjual", () -> {
+                loggedInUser = seller;
+                System.out.println("Login berhasil! Selamat datang, " + loggedInUser.getUsername() + "!");
+                // Call seller menu here
+                return true;
+            }));
+        }
+        if (buyer != null) {
+            loginRouter.addRouterItem(new RouterItem("Pembeli", () -> {
+                loggedInUser = buyer;
+                System.out.println("Login berhasil! Selamat datang, " + loggedInUser.getUsername() + "!");
+                // Call buyer menu here
+                return true;
+            }));
+        }
+        if (courier != null) {
+            loginRouter.addRouterItem(new RouterItem("Pengirim", () -> {
+                loggedInUser = courier;
+                System.out.println("Login berhasil! Selamat datang, " + loggedInUser.getUsername() + "!");
+                // Call courier menu here
+                return true;
+            }));
+        }
+        loginRouter.addRouterItem(new RouterItem("Cek Saldo Antar Role", () -> {
+            System.out.println("\nRole      | Saldo");
+            System.out.println("======================");
+            if (buyer != null) System.out.println("Pembeli   | " + ((Buyer) buyer).getBalance());
+            if (seller != null) System.out.println("Penjual   | " + ((Seller) seller).getBalance());
+            if (courier != null) System.out.println("Pengirim  | " + ((Courier) courier).getBalance());
+            System.out.println("======================");
+            return false;
+        }));
+
+        loginRouter.printAndPrompt(SharedScanner.getInstance());
     }
 
     private void handleRegister() {
