@@ -13,4 +13,13 @@ public class StoreProductRepo extends ProductRepository<StoreProduct> {
     public void setStoreName(String storeName) {
         this.storeName = storeName;
     }
+
+    public StoreProduct findByProductName(String productName) {
+        for (StoreProduct product : entities) {
+            if (product.getName().equals(productName)) {
+                return product;
+            }
+        }
+        return null;
+    }
 }
