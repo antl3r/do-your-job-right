@@ -1,24 +1,24 @@
 package menu;
 
-import java.util.Scanner;
-
 import abstracts.Menu;
 import abstracts.User;
 import classes.BurhanPedia;
-import classes.RouterItem;
 import classes.Buyer;
-import classes.Seller;
 import classes.Courier;
 import classes.Router;
+import classes.RouterItem;
+import classes.Seller;
 import classes.SharedScanner;
 
 public class MainMenu extends Menu {
     private final BurhanPedia burhanPedia; // Variable to store BurhanPedia instance
     private User loggedInUser; // Variable to store the logged-in user
+    
 
     public MainMenu(BurhanPedia burhanPedia) {
         super();
         this.burhanPedia = burhanPedia;
+        BuyerMenu buyerMenu = new BuyerMenu(burhanPedia);
         this.router.addRouterItems(
             new RouterItem("Login", () -> {
                 this.handleLogin();
@@ -97,6 +97,7 @@ public class MainMenu extends Menu {
                 loggedInUser = buyer;
                 System.out.println("Login berhasil! Selamat datang, " + loggedInUser.getUsername() + "!");
                 // Call buyer menu here
+                buyerMenu(burhanPedia);
                 return true;
             }));
         }
