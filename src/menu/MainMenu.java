@@ -10,6 +10,7 @@ import classes.Buyer;
 import classes.Seller;
 import classes.Courier;
 import classes.Router;
+import classes.SharedScanner;
 
 public class MainMenu extends Menu {
     private final BurhanPedia burhanPedia; // Variable to store BurhanPedia instance
@@ -41,7 +42,7 @@ public class MainMenu extends Menu {
      */
     private String promptUsername() {
         System.out.print("\nMasukkan username: ");
-        return burhanPedia.scanner.nextLine();
+        return SharedScanner.getInstance().nextLine();
     }
 
     /**
@@ -51,7 +52,7 @@ public class MainMenu extends Menu {
      */
     private String promptPassword() {
         System.out.print("\nMasukkan password: ");
-        return burhanPedia.scanner.nextLine();
+        return SharedScanner.getInstance().nextLine();
     }
 
     private void handleLogin() {

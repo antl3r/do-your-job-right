@@ -3,6 +3,7 @@ package menu;
 import abstracts.Menu;
 import classes.BurhanPedia;
 import classes.RouterItem;
+import classes.SharedScanner;
 
 public class AdminMenu extends Menu {
     private final BurhanPedia burhanPedia;
@@ -14,5 +15,6 @@ public class AdminMenu extends Menu {
             new RouterItem("Choice3", () -> {return false;})
         );
         this.burhanPedia = burhanPedia;
+        // Use SharedScanner.getInstance() wherever a Scanner is needed
     }
 }
