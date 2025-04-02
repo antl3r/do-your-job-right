@@ -1,7 +1,9 @@
 package abstracts;
 
 public abstract class UserMenu<T extends User> extends Menu {
-    public UserMenu() {
-        super();
+    protected T user;
+
+    public UserMenu(T user) {
+        this.user = user;
     }
 }

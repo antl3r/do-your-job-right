@@ -1,5 +1,10 @@
 package menu;
 
-import abstracts.Menu;
+import abstracts.UserMenu;
+import classes.Seller;
 
-public class SellerMenu extends Menu {}
+public class SellerMenu extends UserMenu<Seller> {
+    public SellerMenu(Seller user) {
+        super(user);
+    }
+}

@@ -11,19 +11,18 @@ import classes.Seller;
 public class MainMenu extends Menu {
     public MainMenu() {
         this.router.addRouterItems(
-            new RouterItem("Login", () -> {
-                this.handleLogin();
-                return false;
-            }),
-            new RouterItem("Register", () -> {
-                this.handleRegister();
-                return false;
-            }),
-            new RouterItem("Hari Selanjutnya", () -> {
-                this.handleLogin();
-                return false;
-            })
-        );
+                new RouterItem("Login", () -> {
+                    this.handleLogin();
+                    return false;
+                }),
+                new RouterItem("Register", () -> {
+                    this.handleRegister();
+                    return false;
+                }),
+                new RouterItem("Hari Selanjutnya", () -> {
+                    this.handleLogin();
+                    return false;
+                }));
 
         this.router.printAndPrompt(sharedScanner);
     }
@@ -53,9 +52,9 @@ public class MainMenu extends Menu {
         String username = promptUsername();
         String password = promptPassword();
 
-        User buyer = burhanPedia.buyerRepo.findByUsername(username);
-        User seller = burhanPedia.sellerRepo.findByUsername(username);
-        User courier = burhanPedia.courierRepo.findByUsername(username);
+        Buyer buyer = burhanPedia.buyerRepo.findByUsername(username);
+        Seller seller = burhanPedia.sellerRepo.findByUsername(username);
+        Courier courier = burhanPedia.courierRepo.findByUsername(username);
 
         if (buyer == null && seller == null && courier == null) {
             System.out.println("User tidak ditemukan.");
@@ -63,9 +62,12 @@ public class MainMenu extends Menu {
         }
 
         User validUser = null;
-        if (buyer != null && buyer.getPassword().equals(password)) validUser = buyer;
-        if (seller != null && seller.getPassword().equals(password)) validUser = seller;
-        if (courier != null && courier.getPassword().equals(password)) validUser = courier;
+        if (buyer != null && buyer.getPassword().equals(password))
+            validUser = buyer;
+        if (seller != null && seller.getPassword().equals(password))
+            validUser = seller;
+        if (courier != null && courier.getPassword().equals(password))
+            validUser = courier;
 
         if (validUser == null) {
             System.out.println("Password salah.");
@@ -76,30 +78,33 @@ public class MainMenu extends Menu {
         if (seller != null) {
             loginRouter.addRouterItem(new RouterItem("Penjual", () -> {
                 System.out.println("Login berhasil! Selamat datang, " + seller.getUsername() + "!");
-                // Call seller menu here
+                new SellerMenu(seller).display();
                 return true;
             }));
         }
         if (buyer != null) {
             loginRouter.addRouterItem(new RouterItem("Pembeli", () -> {
                 System.out.println("Login berhasil! Selamat datang, " + buyer.getUsername() + "!");
-                new BuyerMenu(burhanPedia).display();
+                new BuyerMenu(buyer).display();
                 return true;
             }));
         }
         if (courier != null) {
             loginRouter.addRouterItem(new RouterItem("Pengirim", () -> {
                 System.out.println("Login berhasil! Selamat datang, " + courier.getUsername() + "!");
-                // Call courier menu here
+                new CourierMenu(courier).display();
                 return true;
             }));
         }
         loginRouter.addRouterItem(new RouterItem("Cek Saldo Antar Role", () -> {
             System.out.println("\nRole      | Saldo");
             System.out.println("======================");
-            if (buyer != null) System.out.println("Pembeli   | " + ((Buyer) buyer).getBalance());
-            if (seller != null) System.out.println("Penjual   | " + ((Seller) seller).getBalance());
-            if (courier != null) System.out.println("Pengirim  | " + ((Courier) courier).getBalance());
+            if (buyer != null)
+                System.out.println("Pembeli   | " + ((Buyer) buyer).getBalance());
+            if (seller != null)
+                System.out.println("Penjual   | " + ((Seller) seller).getBalance());
+            if (courier != null)
+                System.out.println("Pengirim  | " + ((Courier) courier).getBalance());
             System.out.println("======================");
             return false;
         }));
@@ -124,56 +129,54 @@ public class MainMenu extends Menu {
 
             Router roleMenu = new Router();
             roleMenu.addRouterItems(
-                new RouterItem("Penjual", () -> {
-                    if (burhanPedia.sellerRepo.findByUsername(username) != null) {
-                        System.out.println("Role sudah ada. Silahkan pilih role lain!");
-                        return false;
-                    } else {
-                        burhanPedia.sellerRepo.add(new Seller(username, password, 0));
-                        System.out.println("Registrasi akun penjual berhasil!");
-                        return true;
-                    }
-                }),
-                new RouterItem("Pembeli", () -> {
-                    if (burhanPedia.buyerRepo.findByUsername(username) != null) {
-                        System.out.println("Role sudah ada. Silahkan pilih role lain!");
-                        return false;
-                    } else {
-                        burhanPedia.buyerRepo.add(new Buyer(username, password, 0));
-                        System.out.println("Registrasi akun pembeli berhasil!");
-                        return true;
-                    }
-                }),
-                new RouterItem("Pengirim", () -> {
-                    if (burhanPedia.courierRepo.findByUsername(username) != null) {
-                        System.out.println("Role sudah ada. Silahkan pilih role lain!");
-                        return false;
-                    } else {
-                        burhanPedia.courierRepo.add(new Courier(username, password, 0));
-                        System.out.println("Registrasi akun pengirim berhasil!");
-                        return true;
-                    }
-                })
-            );
+                    new RouterItem("Penjual", () -> {
+                        if (burhanPedia.sellerRepo.findByUsername(username) != null) {
+                            System.out.println("Role sudah ada. Silahkan pilih role lain!");
+                            return false;
+                        } else {
+                            burhanPedia.sellerRepo.add(new Seller(username, password, 0));
+                            System.out.println("Registrasi akun penjual berhasil!");
+                            return true;
+                        }
+                    }),
+                    new RouterItem("Pembeli", () -> {
+                        if (burhanPedia.buyerRepo.findByUsername(username) != null) {
+                            System.out.println("Role sudah ada. Silahkan pilih role lain!");
+                            return false;
+                        } else {
+                            burhanPedia.buyerRepo.add(new Buyer(username, password, 0));
+                            System.out.println("Registrasi akun pembeli berhasil!");
+                            return true;
+                        }
+                    }),
+                    new RouterItem("Pengirim", () -> {
+                        if (burhanPedia.courierRepo.findByUsername(username) != null) {
+                            System.out.println("Role sudah ada. Silahkan pilih role lain!");
+                            return false;
+                        } else {
+                            burhanPedia.courierRepo.add(new Courier(username, password, 0));
+                            System.out.println("Registrasi akun pengirim berhasil!");
+                            return true;
+                        }
+                    }));
 
             roleMenu.printAndPrompt(sharedScanner);
         } else {
             String password = promptPassword();
             Router roleMenu = new Router();
             roleMenu.addRouterItems(
-                new RouterItem("Penjual", () -> {
-                    System.out.println("Akun penjual berhasil didaftarkan.");
-                    return burhanPedia.sellerRepo.add(new Seller(username, password, 0));
-                }),
-                new RouterItem("Pembeli", () -> {
-                    System.out.println("Akun pembeli berhasil didaftarkan.");
-                    return burhanPedia.buyerRepo.add(new Buyer(username, password, 0));
-                }),
-                new RouterItem("Pengirim", () -> {
-                    System.out.println("Akun pengirim berhasil didaftarkan.");
-                    return burhanPedia.courierRepo.add(new Courier(username, password, 0));
-                })
-            );
+                    new RouterItem("Penjual", () -> {
+                        System.out.println("Akun penjual berhasil didaftarkan.");
+                        return burhanPedia.sellerRepo.add(new Seller(username, password, 0));
+                    }),
+                    new RouterItem("Pembeli", () -> {
+                        System.out.println("Akun pembeli berhasil didaftarkan.");
+                        return burhanPedia.buyerRepo.add(new Buyer(username, password, 0));
+                    }),
+                    new RouterItem("Pengirim", () -> {
+                        System.out.println("Akun pengirim berhasil didaftarkan.");
+                        return burhanPedia.courierRepo.add(new Courier(username, password, 0));
+                    }));
 
             roleMenu.printAndPrompt(sharedScanner);
         }
