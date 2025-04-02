@@ -1,26 +1,21 @@
 package menu;
 
-import abstracts.Menu;
-import classes.BurhanPedia;
+import abstracts.UserMenu;
+import classes.Buyer;
 import classes.RouterItem;
-import classes.SharedScanner;
 
-public class BuyerMenu extends Menu {
-    private final BurhanPedia burhanPedia;
-
-    public BuyerMenu(BurhanPedia burhanPedia) {
-        super(
-            new RouterItem("Cek Saldo", () -> {return false;}),
-            new RouterItem("Top Up Saldo", () -> {return false;}),
-            new RouterItem("Cek Daftar Barang", () -> {return false;}),
-            new RouterItem("Tambah Barang ke Keranjang", () -> {return false;}),
-            new RouterItem("Checkout Keranjang", () -> {return false;}),
-            new RouterItem("Lacak Barang", () -> {return false;}),
-            new RouterItem("Lihat Laporan Pengeluaran", () -> {return false;}),
-            new RouterItem("Lihat Riwayat Transaksi", () -> {return false;}),
-            new RouterItem("Kembali ke Menu Utama", () -> {return false;})
-        );
-        this.burhanPedia = burhanPedia;
-        // Use SharedScanner.getInstance() wherever a Scanner is needed
+public class BuyerMenu extends UserMenu<Buyer> {
+    public BuyerMenu(Buyer user) {
+        super(user);
+        System.out.println("===== MENU PEMBELI =====");
+        this.router.addRouterItems(
+                new RouterItem("Cek Saldo", () -> false),
+                new RouterItem("Top Up Saldo", () -> false),
+                new RouterItem("Cek Daftar Barang", () -> false),
+                new RouterItem("Tambah Barang ke Keranjang", () -> false),
+                new RouterItem("Checkout Keranjang", () -> false),
+                new RouterItem("Lacak Barang", () -> false),
+                new RouterItem("Lihat Laporan Pengeluaran", () -> false),
+                new RouterItem("Lihat Riwayat Transaksi", () -> false));
     }
 }
