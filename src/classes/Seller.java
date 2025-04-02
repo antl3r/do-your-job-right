@@ -1,9 +1,13 @@
 package classes;
 
 import abstracts.User;
+import repos.StoreProductRepo;
 
 public class Seller extends User {
-    public Seller(String username, String password, double balance) {
+    private StoreProductRepo store;
+
+    public Seller(String username, String password, double balance, StoreProductRepo store) {
         super(username, password, balance);
+        this.store = store;
     }
 }

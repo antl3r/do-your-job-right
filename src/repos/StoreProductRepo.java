@@ -6,6 +6,11 @@ import classes.StoreProduct;
 public class StoreProductRepo extends ProductRepository<StoreProduct> {
     private String storeName;
 
+    public StoreProductRepo(String storeName) {
+        super();
+        this.storeName = storeName;
+    }
+
     public String getStoreName() {
         return storeName;
     }

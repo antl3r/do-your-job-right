@@ -7,6 +7,8 @@ import classes.Courier;
 import classes.Router;
 import classes.RouterItem;
 import classes.Seller;
+import repos.StoreProductRepo;
+import utils.Util;
 
 public class MainMenu extends Menu {
     public MainMenu() {
@@ -45,6 +47,49 @@ public class MainMenu extends Menu {
     private String promptPassword() {
         System.out.print("\nMasukkan password: ");
         return sharedScanner.nextLine();
+    }
+
+    private boolean handleRegisterNewSeller(String username, String password) {
+        if (burhanPedia.sellerRepo.findByUsername(username) != null) {
+            System.out.println("Role sudah ada. Silahkan pilih role lain!");
+            return false;
+        } else {
+            StoreProductRepo newStore = new StoreProductRepo(
+                    Util.promptString("Masukkan nama toko: ", sharedScanner));
+
+            burhanPedia.sellerRepo.add(
+                    new Seller(
+                            username,
+                            password,
+                            0,
+                            newStore));
+
+            burhanPedia.storeRepo.add(newStore);
+            System.out.println("Registrasi akun penjual berhasil!");
+            return true;
+        }
+    }
+
+    private boolean handleRegisterNewBuyer(String username, String password) {
+        if (burhanPedia.buyerRepo.findByUsername(username) != null) {
+            System.out.println("Role sudah ada. Silahkan pilih role lain!");
+            return false;
+        } else {
+            burhanPedia.buyerRepo.add(new Buyer(username, password, 0));
+            System.out.println("Registrasi akun pembeli berhasil!");
+            return true;
+        }
+    }
+
+    private boolean handleRegisterNewCourier(String username, String password) {
+        if (burhanPedia.courierRepo.findByUsername(username) != null) {
+            System.out.println("Role sudah ada. Silahkan pilih role lain!");
+            return false;
+        } else {
+            burhanPedia.courierRepo.add(new Courier(username, password, 0));
+            System.out.println("Registrasi akun pengirim berhasil!");
+            return true;
+        }
     }
 
     private void handleLogin() {
@@ -120,65 +165,24 @@ public class MainMenu extends Menu {
 
         if (existingUser != null) {
             System.out.println("\nUsername sudah ada! Silahkan konfirmasi password untuk menambahkan role lain.");
-            String password = promptPassword();
+        }
 
-            if (!existingUser.getPassword().equals(password)) {
+        String password = promptPassword();
+
+        if (existingUser != null) {
+            if (existingUser.getPassword().equals(password)) {
                 System.out.println("Password salah. Registrasi dibatalkan.");
                 return;
             }
-
-            Router roleMenu = new Router();
-            roleMenu.addRouterItems(
-                    new RouterItem("Penjual", () -> {
-                        if (burhanPedia.sellerRepo.findByUsername(username) != null) {
-                            System.out.println("Role sudah ada. Silahkan pilih role lain!");
-                            return false;
-                        } else {
-                            burhanPedia.sellerRepo.add(new Seller(username, password, 0));
-                            System.out.println("Registrasi akun penjual berhasil!");
-                            return true;
-                        }
-                    }),
-                    new RouterItem("Pembeli", () -> {
-                        if (burhanPedia.buyerRepo.findByUsername(username) != null) {
-                            System.out.println("Role sudah ada. Silahkan pilih role lain!");
-                            return false;
-                        } else {
-                            burhanPedia.buyerRepo.add(new Buyer(username, password, 0));
-                            System.out.println("Registrasi akun pembeli berhasil!");
-                            return true;
-                        }
-                    }),
-                    new RouterItem("Pengirim", () -> {
-                        if (burhanPedia.courierRepo.findByUsername(username) != null) {
-                            System.out.println("Role sudah ada. Silahkan pilih role lain!");
-                            return false;
-                        } else {
-                            burhanPedia.courierRepo.add(new Courier(username, password, 0));
-                            System.out.println("Registrasi akun pengirim berhasil!");
-                            return true;
-                        }
-                    }));
-
-            roleMenu.printAndPrompt(sharedScanner);
-        } else {
-            String password = promptPassword();
-            Router roleMenu = new Router();
-            roleMenu.addRouterItems(
-                    new RouterItem("Penjual", () -> {
-                        System.out.println("Akun penjual berhasil didaftarkan.");
-                        return burhanPedia.sellerRepo.add(new Seller(username, password, 0));
-                    }),
-                    new RouterItem("Pembeli", () -> {
-                        System.out.println("Akun pembeli berhasil didaftarkan.");
-                        return burhanPedia.buyerRepo.add(new Buyer(username, password, 0));
-                    }),
-                    new RouterItem("Pengirim", () -> {
-                        System.out.println("Akun pengirim berhasil didaftarkan.");
-                        return burhanPedia.courierRepo.add(new Courier(username, password, 0));
-                    }));
-
-            roleMenu.printAndPrompt(sharedScanner);
+            ;
         }
+
+        Router roleMenu = new Router();
+        roleMenu.addRouterItems(
+                new RouterItem("Penjual", () -> handleRegisterNewSeller(username, password)),
+                new RouterItem("Pembeli", () -> handleRegisterNewBuyer(username, password)),
+                new RouterItem("Pengirim", () -> handleRegisterNewCourier(username, password)));
+
+        roleMenu.printAndPrompt(sharedScanner);
     }
 }
