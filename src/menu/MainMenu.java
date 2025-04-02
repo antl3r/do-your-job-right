@@ -2,8 +2,6 @@ package menu;
 
 import abstracts.Menu;
 import abstracts.User;
-import classes.BurhanPedia;
-import classes.RouterItem;
 import classes.Buyer;
 import classes.Courier;
 import classes.Router;
@@ -86,9 +84,8 @@ public class MainMenu extends Menu {
         }
         if (buyer != null) {
             loginRouter.addRouterItem(new RouterItem("Pembeli", () -> {
-                loggedInUser = buyer;
-                System.out.println("Login berhasil! Selamat datang, " + loggedInUser.getUsername() + "!");
-                // Call buyer menu here
+                System.out.println("Login berhasil! Selamat datang, " + buyer.getUsername() + "!");
+                new BuyerMenu(buyer).display();
                 return true;
             }));
         }
