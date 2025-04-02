@@ -3,18 +3,19 @@ package menu;
 import abstracts.Menu;
 import classes.BurhanPedia;
 import classes.RouterItem;
-import classes.SharedScanner;
 
 public class BuyerMenu extends Menu {
-    private final BurhanPedia burhanPedia;
-
     public BuyerMenu(BurhanPedia burhanPedia) {
-        super(
-            new RouterItem("Choice1", () -> {return false;}),
-            new RouterItem("Choice2", () -> {return false;}),
-            new RouterItem("Choice3", () -> {return false;})
+        System.out.println("===== MENU PEMBELI =====");
+        this.router.addRouterItems(
+            new RouterItem("Cek Saldo", () -> false),
+            new RouterItem("Top Up Saldo", () -> false),
+            new RouterItem("Cek Daftar Barang", () -> false),
+            new RouterItem("Tambah Barang ke Keranjang", () -> false),
+            new RouterItem("Checkout Keranjang", () -> false),
+            new RouterItem("Lacak Barang", () -> false),
+            new RouterItem("Lihat Laporan Pengeluaran", () -> false),
+            new RouterItem("Lihat Riwayat Transaksi", () -> false)
         );
-        this.burhanPedia = burhanPedia;
-        // Use SharedScanner.getInstance() wherever a Scanner is needed
     }
 }
