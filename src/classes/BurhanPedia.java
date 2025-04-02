@@ -6,7 +6,7 @@ import repos.CourierRepo;
 import repos.PromoRepo;
 import repos.SellerRepo;
 import repos.TransactionRepo;
-import repos.VoucherRepo;
+import repos.StoreRepo;
 
 public class BurhanPedia {
     private static BurhanPedia INSTANCE = new BurhanPedia();
@@ -17,9 +17,10 @@ public class BurhanPedia {
     public final PromoRepo promoRepo = new PromoRepo();
     public final SellerRepo sellerRepo = new SellerRepo();
     public final TransactionRepo transactionRepo = new TransactionRepo();
-    public final VoucherRepo voucherRepo = new VoucherRepo();
+    public final StoreRepo voucherRepo = new StoreRepo();
 
-    private BurhanPedia() {};
+    private BurhanPedia() {
+    };
 
     public static BurhanPedia getInstance() {
         return INSTANCE;

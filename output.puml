@@ -1,0 +1,285 @@
+@startuml
+skinparam classAttributeIconSize 0
+class Product{
+# amount : int
++ Product(amount : int)
++ Product(amount : int, id : UUID)
++ getAmount() : int
++ setAmount(amount : int) : void
++ addAmount(amount : int) : void
++ subtractAmount(amount : int) : void
+}
+Product --|> Entity
+class Router{
+- routerItems : List<RouterItem>
++ Router(items : RouterItem)
++ Router()
++ getRouterItems() : List<RouterItem>
++ addRouterItem(item : RouterItem) : void
++ addRouterItems(items : RouterItem) : void
++ printAndPrompt(scanner : Scanner) : void
+}
+class Voucher{
+- usesLeft : int
++ Voucher(discountCode : String, validUntil : Date, usesLeft : int)
++ getUsesLeft() : int
++ setUsesLeft(usesLeft : int) : void
++ canBeUsed() : boolean
++ use() : void
+}
+Voucher --|> Discount
+class Promo{
++ Promo(discountCode : String, validUntil : Date)
+}
+Promo --|> Discount
+class StoreProductRepo{
+- storeName : String
++ getStoreName() : String
++ setStoreName(storeName : String) : void
+}
+StoreProductRepo --|> ProductRepository
+class StoreProduct{
+- name : String
+- price : long
++ StoreProduct(name : String, price : long, amount : int)
++ getName() : String
++ setName(name : String) : void
++ getPrice() : long
++ setPrice(price : long) : void
++ calculateTotalValue() : long
+}
+StoreProduct --|> Product
+class BuyerRepo{
+}
+BuyerRepo --|> UserRepository
+class TransactionRepo{
+}
+TransactionRepo --|> Repository
+class Admin{
++ Admin(username : String, password : String, balance : double)
+}
+Admin --|> User
+class AdminRepo{
+}
+AdminRepo --|> UserRepository
+class UserRepository{
++ findByUsername(username : String) : T
++ updatePassword(username : String, newPassword : String) : boolean
++ updateBalance(username : String, newBalance : double) : boolean
++ verifyCredentials(username : String, password : String) : T
++ add(user : T) : boolean
+}
+UserRepository ..|> IUserRepository
+UserRepository --|> Repository
+class RouterItem{
+- title : String
+- callback : IRouterCallback
++ RouterItem(title : String, callback : IRouterCallback)
++ getTitle() : String
++ getCallback() : IRouterCallback
+}
+class SellerRepo{
+}
+SellerRepo --|> UserRepository
+class CartProductRepo{
+}
+CartProductRepo --|> ProductRepository
+class Entity{
+- id : UUID
++ Entity()
++ Entity(id : UUID)
++ getId() : UUID
+}
+class CourierRepo{
+}
+CourierRepo --|> UserRepository
+class CourierMenu{
++ CourierMenu(user : Courier)
+}
+CourierMenu --|> UserMenu
+class PromoRepo{
+}
+PromoRepo --|> DiscountRepository
+class Repository{
+# entities : List<T>
++ add(entity : T) : boolean
++ getAll() : List<T>
++ findById(id : UUID) : T
++ deleteById(id : UUID) : boolean
++ getId(entity : T) : UUID
+}
+Repository ..|> IRepository
+class Seller{
++ Seller(username : String, password : String, balance : double)
+}
+Seller --|> User
+class BuyerMenu{
++ BuyerMenu(user : Buyer)
+}
+BuyerMenu --|> UserMenu
+class TransactionProduct{
++ TransactionProduct(amount : int, id : UUID)
+}
+TransactionProduct --|> Product
+class Buyer{
+- cartProductRepo : CartProductRepo
+- transactionHistory : List<Transaction>
++ Buyer(username : String, password : String, balance : double)
++ getCartProductRepo() : CartProductRepo
++ getTransactionHistory() : List<Transaction>
++ addTransaction(transaction : Transaction) : void
++ removeTransaction(transaction : Transaction) : void
+}
+Buyer --|> User
+class Discount{
+- discountCode : String
+- validUntil : Date
++ Discount(discountCode : String, validUntil : Date)
++ getDiscountCode() : String
++ setDiscountCode(discountCode : String) : void
++ getValidUntil() : Date
++ setValidUntil(validUntil : Date) : void
++ isExpired() : boolean
+}
+Discount --|> Entity
+class SellerMenu{
++ SellerMenu(user : Seller)
+}
+SellerMenu --|> UserMenu
+class TransactionProductRepo{
+}
+TransactionProductRepo --|> ProductRepository
+class ProductRepository{
++ subtractAmount(id : UUID, amount : int) : void
++ addAmount(id : UUID, amount : int) : void
++ setAmount(id : UUID, amount : int) : void
+}
+ProductRepository --|> Repository
+class BurhanPedia{
+- {static} INSTANCE : BurhanPedia
++ adminRepo : AdminRepo
++ buyerRepo : BuyerRepo
++ courierRepo : CourierRepo
++ promoRepo : PromoRepo
++ sellerRepo : SellerRepo
++ transactionRepo : TransactionRepo
++ voucherRepo : VoucherRepo
+- BurhanPedia()
++ {static} getInstance() : BurhanPedia
+}
+class MainMenu{
++ MainMenu()
+- promptUsername() : String
+- promptPassword() : String
+- handleLogin() : void
+- handleRegister() : void
+}
+MainMenu --|> Menu
+class App{
++ {static} main(args : String[]) : void
+}
+class CartProduct{
++ CartProduct(amount : int, id : UUID)
+}
+CartProduct --|> Product
+class AdminMenu{
+}
+AdminMenu --|> Menu
+class Transaction{
+- sellerName : String
+- buyerName : String
+- courierName : String
+- transactionStatusHistory : List<TransactionStatus>
+- boughtProducts : TransactionProductRepo
++ Transaction(sellerName : String, buyerName : String, courierName : String)
++ getSellerName() : String
++ getBuyerName() : String
++ getCourierName() : String
++ getTransactionStatusHistory() : List<TransactionStatus>
++ addTransactionStatus(status : TransactionStatus) : void
++ removeTransactionStatus(status : TransactionStatus) : void
++ getCurrentTransactionStatus() : TransactionStatus
++ getBoughtProducts() : TransactionProductRepo
+}
+Transaction --|> Entity
+class UserMenu{
+# user : T
++ UserMenu(user : T)
+}
+UserMenu --|> Menu
+class Courier{
++ Courier(username : String, password : String, balance : double)
+}
+Courier --|> User
+class DiscountRepository{
++ findByCode(code : String) : T
+}
+DiscountRepository ..|> IDiscountRepository
+DiscountRepository --|> Repository
+class User{
+- username : String
+- password : String
+- balance : double
++ User(username : String, password : String, balance : double)
++ getUsername() : String
++ getPassword() : String
++ getBalance() : double
++ setBalance(balance : double) : void
++ setPassword(password : String) : void
+}
+User --|> Entity
+class SharedScanner{
+- {static} scanner : Scanner
++ {static} getInstance() : Scanner
+}
+class Menu{
+# burhanPedia : BurhanPedia
+# sharedScanner : Scanner
+# router : Router
++ display() : void
+}
+class VoucherRepo{
+}
+VoucherRepo --|> DiscountRepository
+RouterItem--"- callback" IRouterCallback
+Buyer--"- cartProductRepo" CartProductRepo
+BurhanPedia--"- {static} INSTANCE" BurhanPedia
+BurhanPedia--"+ adminRepo" AdminRepo
+BurhanPedia--"+ buyerRepo" BuyerRepo
+BurhanPedia--"+ courierRepo" CourierRepo
+BurhanPedia--"+ promoRepo" PromoRepo
+BurhanPedia--"+ sellerRepo" SellerRepo
+BurhanPedia--"+ transactionRepo" TransactionRepo
+BurhanPedia--"+ voucherRepo" VoucherRepo
+Transaction--"- boughtProducts" TransactionProductRepo
+Menu--"# burhanPedia" BurhanPedia
+Menu--"# router" Router
+interface IRepository{
+add(entity : T) : boolean
+getAll() : List<T>
+findById(id : UUID) : T
+deleteById(id : UUID) : boolean
+getId(entity : T) : UUID
+}
+interface IUserRepository{
+findByUsername(username : String) : T
+updatePassword(username : String, newPassword : String) : boolean
+updateBalance(username : String, newBalance : double) : boolean
+verifyCredentials(username : String, password : String) : T
+}
+IUserRepository --|> IRepository
+interface IDiscountRepository{
+findByCode(code : String) : T
+}
+IDiscountRepository --|> IRepository
+interface IRouterCallback{
+execute() : boolean
+}
+enum TransactionStatus{
+SEDANG_DIKEMAS
+MENUNGGU_PENGIRIM
+SEDANG_DIKIRIM
+PESANAN_SELESAI
+DIKEMBALIKAN
+}
+@enduml
