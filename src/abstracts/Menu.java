@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import classes.Router;
 import classes.RouterItem;
+import classes.SharedScanner;
 
 public abstract class Menu {
     protected Router router = new Router();
@@ -12,7 +13,7 @@ public abstract class Menu {
         this.router.addRouterItems(items);
     }
 
-    public void display(Scanner scanner) {
-        router.printAndPrompt(scanner);
+    public void display() {
+        router.printAndPrompt(SharedScanner.getInstance());
     };
 }
