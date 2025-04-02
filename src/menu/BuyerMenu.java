@@ -1,13 +1,11 @@
 package menu;
 
 import abstracts.UserMenu;
-import classes.BurhanPedia;
 import classes.Buyer;
 import classes.RouterItem;
 import classes.Seller;
 import classes.StoreProduct;
 import repos.SellerRepo;
-import repos.StoreProductRepo;
 
 public class BuyerMenu extends UserMenu<Buyer> {
     public BuyerMenu(Buyer user) {
@@ -45,9 +43,9 @@ public class BuyerMenu extends UserMenu<Buyer> {
     private void handleCekDaftarBarang(){
         for (Seller seller : SellerRepo.getSellerList()){
             System.out.println(seller.getUsername());
-            for (StoreProduct product : seller.getStore.getAll()){
+            for (StoreProduct product : seller.getStore().getAll()){
                 System.out.println(product.getName());
-                System.out.printf("%-10s %10d.00 %10d\n", product.getName(), product.getProductPrice(), product.getProductStock());
+                System.out.printf("%-10s %10d.00 %10d\n", product.getName(), product.getPrice(), product.getAmount());
             }
         }
         System.out.println("======================");
