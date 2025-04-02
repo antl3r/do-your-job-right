@@ -1,24 +1,15 @@
 package menu;
 
-import java.util.Scanner;
-
 import abstracts.Menu;
 import abstracts.User;
-import classes.BurhanPedia;
-import classes.RouterItem;
 import classes.Buyer;
-import classes.Seller;
 import classes.Courier;
 import classes.Router;
-import classes.SharedScanner;
+import classes.RouterItem;
+import classes.Seller;
 
 public class MainMenu extends Menu {
-    private final BurhanPedia burhanPedia; // Variable to store BurhanPedia instance
-    private User loggedInUser; // Variable to store the logged-in user
-
-    public MainMenu(BurhanPedia burhanPedia) {
-        super();
-        this.burhanPedia = burhanPedia;
+    public MainMenu() {
         this.router.addRouterItems(
             new RouterItem("Login", () -> {
                 this.handleLogin();
@@ -33,6 +24,8 @@ public class MainMenu extends Menu {
                 return false;
             })
         );
+
+        this.router.printAndPrompt(sharedScanner);
     }
 
     /**
@@ -42,7 +35,7 @@ public class MainMenu extends Menu {
      */
     private String promptUsername() {
         System.out.print("\nMasukkan username: ");
-        return SharedScanner.getInstance().nextLine();
+        return sharedScanner.nextLine();
     }
 
     /**
@@ -52,7 +45,7 @@ public class MainMenu extends Menu {
      */
     private String promptPassword() {
         System.out.print("\nMasukkan password: ");
-        return SharedScanner.getInstance().nextLine();
+        return sharedScanner.nextLine();
     }
 
     private void handleLogin() {
@@ -82,24 +75,21 @@ public class MainMenu extends Menu {
         Router loginRouter = new Router();
         if (seller != null) {
             loginRouter.addRouterItem(new RouterItem("Penjual", () -> {
-                loggedInUser = seller;
-                System.out.println("Login berhasil! Selamat datang, " + loggedInUser.getUsername() + "!");
+                System.out.println("Login berhasil! Selamat datang, " + seller.getUsername() + "!");
                 // Call seller menu here
                 return true;
             }));
         }
         if (buyer != null) {
             loginRouter.addRouterItem(new RouterItem("Pembeli", () -> {
-                loggedInUser = buyer;
-                System.out.println("Login berhasil! Selamat datang, " + loggedInUser.getUsername() + "!");
-                // Call buyer menu here
+                System.out.println("Login berhasil! Selamat datang, " + buyer.getUsername() + "!");
+                new BuyerMenu(burhanPedia).display();
                 return true;
             }));
         }
         if (courier != null) {
             loginRouter.addRouterItem(new RouterItem("Pengirim", () -> {
-                loggedInUser = courier;
-                System.out.println("Login berhasil! Selamat datang, " + loggedInUser.getUsername() + "!");
+                System.out.println("Login berhasil! Selamat datang, " + courier.getUsername() + "!");
                 // Call courier menu here
                 return true;
             }));
@@ -114,7 +104,7 @@ public class MainMenu extends Menu {
             return false;
         }));
 
-        loginRouter.printAndPrompt(SharedScanner.getInstance());
+        loginRouter.printAndPrompt(sharedScanner);
     }
 
     private void handleRegister() {
@@ -166,7 +156,7 @@ public class MainMenu extends Menu {
                 })
             );
 
-            roleMenu.printAndPrompt(SharedScanner.getInstance());
+            roleMenu.printAndPrompt(sharedScanner);
         } else {
             String password = promptPassword();
             Router roleMenu = new Router();
@@ -185,7 +175,7 @@ public class MainMenu extends Menu {
                 })
             );
 
-            roleMenu.printAndPrompt(SharedScanner.getInstance());
+            roleMenu.printAndPrompt(sharedScanner);
         }
     }
 }

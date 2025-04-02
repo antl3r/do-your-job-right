@@ -2,16 +2,14 @@ package abstracts;
 
 import java.util.Scanner;
 
+import classes.BurhanPedia;
 import classes.Router;
-import classes.RouterItem;
 import classes.SharedScanner;
 
 public abstract class Menu {
+    protected BurhanPedia burhanPedia = BurhanPedia.getInstance();
+    protected Scanner sharedScanner = SharedScanner.getInstance();
     protected Router router = new Router();
-    
-    public Menu(RouterItem... items) {
-        this.router.addRouterItems(items);
-    }
 
     public void display() {
         router.printAndPrompt(SharedScanner.getInstance());
