@@ -10,4 +10,8 @@ public class Seller extends User {
         super(username, password, balance);
         this.store = store;
     }
+
+    public StoreProductRepo getStore(){
+        return this.store;
+    }
 }
