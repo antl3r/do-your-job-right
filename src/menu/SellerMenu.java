@@ -5,10 +5,6 @@ import classes.RouterItem;
 import classes.Seller;
 
 public class SellerMenu extends UserMenu<Seller> {
-    private void handleCekSaldo() {
-        System.out.println("Saldo saat ini: " + user.getBalance());
-    }
-
     public SellerMenu(Seller user) {
         super(user);
         System.out.println("===== MENU PENJUAL =====");

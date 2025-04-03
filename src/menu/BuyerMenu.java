@@ -31,12 +31,8 @@ public class BuyerMenu extends UserMenu<Buyer> {
         this.router.printAndPrompt(sharedScanner);
     }
 
-    private void handleCekSaldo() {
-        System.out.println("Saldo saat ini: " + user.getBalance());
-    }
-
     private long promptBalance() {
-        return Integer.parseInt(Util.promptString("Masukkan jumlah saldo yang ingin ditambah: ", sharedScanner));
+        return Long.parseLong(Util.promptString("Masukkan jumlah saldo yang ingin ditambah: ", sharedScanner));
     }
 
     private void handleTopUpSaldo() {
