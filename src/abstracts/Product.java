@@ -6,6 +6,26 @@ public abstract class Product extends Entity {
     protected int amount;
 
     /**
+     * Constructs a Product with only 1 amount and a random UUID.
+     * 
+     * @param amount The amount of the product.
+     */
+    public Product() {
+        super();
+        this.amount = 1;
+    }
+
+    /**
+     * Constructs a Product with only 1 amount and a custom UUID.
+     * 
+     * @param amount The amount of the product.
+     */
+    public Product(UUID id) {
+        super(id);
+        this.amount = 1;
+    }
+
+    /**
      * Constructs a Product with the specified amount and a random UUID.
      * 
      * @param amount The amount of the product.

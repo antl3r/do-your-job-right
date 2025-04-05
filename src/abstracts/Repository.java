@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public abstract class Repository<T extends Entity> implements IRepository<T> {
+public abstract class Repository<T extends Entity> extends Entity implements IRepository<T> {
     protected List<T> entities = new ArrayList<>();
 
     @Override
