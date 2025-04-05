@@ -14,7 +14,7 @@ public class BuyerMenu extends UserMenu<Buyer> {
         System.out.println("===== MENU PEMBELI =====");
         this.router.addRouterItems(
                 new RouterItem("Cek Saldo", () -> {
-                    this.handleCekSaldo();
+                    this.handleBalanceCheck();
                     return false;
                 }),
                 new RouterItem("Top Up Saldo", () -> {
