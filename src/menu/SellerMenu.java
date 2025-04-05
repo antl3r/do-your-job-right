@@ -52,6 +52,21 @@ public class SellerMenu extends UserMenu<Seller> {
         if (targetProduct != null) {
             targetProduct.addAmount(
                     Integer.parseInt(Util.promptString("Masukkan jumlah stok yang ingin ditambah:", sharedScanner)));
+        } else {
+            System.err.println("Tidak ada produk dengan nama itu.");
+        }
+    }
+
+    private void handleSetPrice() {
+        StoreProductRepo store = this.user.getStore();
+        StoreProduct targetProduct = store
+                .findByProductName(Util.promptString("Masukkan nama barang: ", sharedScanner));
+
+        if (targetProduct != null) {
+            targetProduct.setPrice(
+                    Long.parseLong(Util.promptString("Masukkan harga barang:", sharedScanner)));
+        } else {
+            System.err.println("Tidak ada produk dengan nama itu.");
         }
     }
 
@@ -72,6 +87,7 @@ public class SellerMenu extends UserMenu<Seller> {
                     return false;
                 }),
                 new RouterItem("Ubah Harga Barang", () -> {
+                    handleSetPrice();
                     return false;
                 }),
                 new RouterItem("Kirim Barang", () -> {
