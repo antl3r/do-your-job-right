@@ -97,6 +97,7 @@ public class SellerMenu extends UserMenu<Seller> {
                     return false;
                 }),
                 new RouterItem("Cek Saldo", () -> {
+                    handleBalanceCheck();
                     return false;
                 }),
                 new RouterItem("Lihat Riwayat Transaksi", () -> {
